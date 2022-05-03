@@ -1,17 +1,28 @@
 package service;
 
 import model.Car;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CarServiceImpl implements CarService{
 
-    public List<Car> getCars(List<Car> cars, int num) {
-        if (num >= cars.size()) {
-            return cars;
-        } else if (num < 0) {
-            return null;
+    private final List<Car> cars;
+
+    {
+        cars = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            cars.add(new Car("model" + i, i, "color" + i));
         }
-        return cars.subList(0, num);
+    }
+
+    public List<Car> getCars(Integer num) {
+        if (num != null && num > 0 && num < cars.size()) {
+            return cars.subList(0, num);
+        } else {
+            return cars;
+        }
     }
 }
